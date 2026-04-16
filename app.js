@@ -1,245 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
+/**
+ * Application interactions 
+ */
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JAAS Consultancy</title>
-    <meta name="description"
-        content="Simplify accounting, taxation, compliance, and business registration with reliable, end-to-end solutions you can trust.">
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Navbar Scroll Effect & Active States
+    const header = document.getElementById('header');
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
-        rel="stylesheet">
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
 
-    <!-- Phosphor Icons for premium icons -->
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+        // Highlight active nav link
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (scrollY >= (sectionTop - 200)) {
+                current = section.getAttribute('id');
+            }
+        });
 
-    <link rel="stylesheet" href="styles.css">
-</head>
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes(current)) {
+                link.classList.add('active');
+            }
+        });
+    });
 
-<body>
+    // 2. Mobile Menu Toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('.nav');
+    const overlay = document.getElementById('overlay');
 
-    <!-- Header Navigation -->
-    <header class="header" id="header">
-        <div class="container header-container">
-            <a href="#" class="logo">
-                <span class="logo-icon"><i class="ph ph-briefcase"></i></span>
-                <span class="logo-text">JAAS Consultancy<span class="accent">.</span></span>
-            </a>
+    function toggleMenu() {
+        nav.classList.toggle('active');
+        overlay.classList.toggle('active');
+        const icon = menuToggle.querySelector('i');
+        if (nav.classList.contains('active')) {
+            icon.classList.replace('ph-list', 'ph-x');
+        } else {
+            icon.classList.replace('ph-x', 'ph-list');
+        }
+    }
 
-            <nav class="nav">
-                <ul class="nav-list">
-                    <li><a href="#home" class="nav-link active">Home</a></li>
-                    <li><a href="#about" class="nav-link">About Us</a></li>
-                    <li><a href="#services" class="nav-link">Services</a></li>
-                    <li><a href="#contact" class="nav-link">Contact</a></li>
-                </ul>
-            </nav>
+    if (menuToggle) {
+        menuToggle.addEventListener('click', toggleMenu);
+    }
 
-            <button class="menu-toggle" aria-label="Toggle menu">
-                <i class="ph ph-list"></i>
-            </button>
-        </div>
-    </header>
+    if (overlay) {
+        overlay.addEventListener('click', toggleMenu);
+    }
 
-    <main>
-        <!-- Hero Section -->
-        <section id="home" class="hero section">
-            <div class="hero-bg"></div>
-            <div class="container hero-content">
-                <div class="hero-text-area fade-in-up">
-                    <span class="badge">Trusted Financial Advisors</span>
-                    <h1 class="hero-title">Precision, Integrity & <br>Financial <span
-                            class="accent-text">Excellence</span></h1>
-                    <p class="hero-subtitle">From bookkeeping to GST registration, we deliver complete financial and compliance solutions designed for accuracy and growth</p>
-                    <div class="hero-actions">
-                        <a href="#services" class="btn btn-primary">Our Services</a>
-                        <a href="#contact" class="btn btn-secondary">Get in Touch</a>
-                    </div>
-                </div>
-            </div>
-            <a href="#about" class="scroll-down">
-                <span class="scroll-text">Scroll Down</span>
-                <i class="ph ph-arrow-down"></i>
-            </a>
-        </section>
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (nav.classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+    });
 
-        <!-- About Section -->
-        <section id="about" class="about section">
-            <div class="container">
-                <div class="section-header fade-in-up">
-                    <h2 class="section-title">Meet Our Experts</h2>
-                    <p class="section-description">A legacy of trust backed by decades of combined financial expertise.</p>
-                </div>
+    // 3. Scroll Animations (Intersection Observer)
+    const fadeElements = document.querySelectorAll('.fade-in-up');
 
-                <div class="ca-grid">
-                    <!-- CA 1 -->
-                    <div class="ca-card fade-in-up" style="animation-delay: 0.1s;">
-                        <div class="ca-image">
-                            <!-- Placeholder avatar using CSS gradient for premium look -->
-                            <div class="avatar-stub">AR</div>
-                        </div>
-                        <div class="ca-info">
-                            <h3 class="ca-name">CA. Arvind Rao</h3>
-                            <p class="ca-role">Founder & Managing Partner</p>
-                            <p class="ca-bio">With over 15 years of experience in corporate taxation and international
-                                finance, Arvind leads the firm's strategic vision.</p>
-                            <div class="ca-creds">
-                                <span>FCA, DISA (ICAI)</span>
-                            </div>
-                        </div>
-                    </div>
+    const appearOptions = {
+        threshold: 0.15,
+        rootMargin: "0px 0px -50px 0px"
+    };
 
-                    <!-- CA 2 -->
-                    <div class="ca-card fade-in-up" style="animation-delay: 0.2s;">
-                        <div class="ca-image">
-                            <!-- Placeholder avatar using CSS gradient for premium look -->
-                            <div class="avatar-stub">SP</div>
-                        </div>
-                        <div class="ca-info">
-                            <h3 class="ca-name">CA. Sneha Patel</h3>
-                            <p class="ca-role">Partner - Audit & Assurance</p>
-                            <p class="ca-bio">Sneha specializes in statutory audits and risk advisory, ensuring 100%
-                                compliance for our enterprise clients.</p>
-                            <div class="ca-creds">
-                                <span>FCA, B.Com</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    const appearOnScroll = new IntersectionObserver(function (entries, appearOnScroll) {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('visible');
+            appearOnScroll.unobserve(entry.target);
+        });
+    }, appearOptions);
 
-        <!-- Services Section -->
-        <section id="services" class="services section bg-light">
-            <div class="container">
-                <div class="section-header fade-in-up">
-                    <h2 class="section-title">Our Services</h2>
-                    <p class="section-description">Comprehensive financial solutions engineered for growth and
-                        stability.</p>
-                </div>
-
-                <div class="services-grid">
-                    <div class="service-card fade-in-up">
-                    <div class="service-icon"><i class="ph ph-calculator"></i></div>
-                    <h3 class="service-title">Accounting</h3>
-                    <p class="service-desc">Maintain accurate financial records and track your business performance efficiently.</p>
-                    </div>
-
-                    <div class="service-card fade-in-up" style="animation-delay: 0.1s;">
-                        <div class="service-icon"><i class="ph ph-book"></i></div>
-                        <h3 class="service-title">Bookkeeping Services</h3>
-                        <p class="service-desc">We handle daily financial transactions, ensuring your records are always up-to-date and organized.</p>
-                    </div>
-
-                    <div class="service-card fade-in-up" style="animation-delay: 0.2s;">
-                        <div class="service-icon"><i class="ph ph-percent"></i></div>
-                        <h3 class="service-title">Direct & Indirect Tax</h3>
-                        <p class="service-desc">Expert support for income tax, GST, and other tax compliance to keep your business legally sound.</p>
-                    </div>
-
-                    <div class="service-card fade-in-up" style="animation-delay: 0.3s;">
-                        <div class="service-icon"><i class="ph ph-file-text"></i></div>
-                        <h3 class="service-title">Financial Statement Preparation</h3>
-                        <p class="service-desc">Preparation of profit & loss statements, balance sheets, and other financial reports.</p>
-                    </div>
-
-                    <div class="service-card fade-in-up" style="animation-delay: 0.4s;">
-                        <div class="service-icon"><i class="ph ph-seal-check"></i></div>
-                        <h3 class="service-title">Digital Signature</h3>
-                        <p class="service-desc">Get secure digital signatures for online filings and official documentation.</p>
-                    </div>
-
-                    <div class="service-card fade-in-up" style="animation-delay: 0.5s;">
-                        <div class="service-icon"><i class="ph ph-buildings"></i></div>
-                        <h3 class="service-title">Company / Partnership / GST Registration</h3>
-                        <p class="service-desc">Hassle-free registration services to legally start and run your business.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact/Location Section -->
-        <section id="contact" class="contact section border-top">
-            <div class="container">
-                <div class="contact-grid">
-                    <div class="contact-info fade-in-up">
-                        <h2 class="section-title">Visit Our Office</h2>
-                        <p class="section-description">Reach out to us for a consultation or any financial queries.</p>
-
-                        <div class="contact-details">
-                            <div class="contact-item">
-                                <i class="ph ph-map-pin"></i>
-                                <div>
-                                    <h4>Location</h4>
-                                    <p>402, Financial District Tower,<br>Navi Mumbai, MH 400708</p>
-                                </div>
-                            </div>
-
-                            <div class="contact-item">
-                                <i class="ph ph-phone"></i>
-                                <div>
-                                    <h4>Phone</h4>
-                                    <p>+91 98765 43210<br>+91 22 2345 6789</p>
-                                </div>
-                            </div>
-
-                            <div class="contact-item">
-                                <i class="ph ph-envelope-simple"></i>
-                                <div>
-                                    <h4>Email</h4>
-                                    <p>jaasconsultancy7@gmail.com</p>
-                                </div>
-                            </div>
-
-                            <div class="contact-item">
-                                <i class="ph ph-clock"></i>
-                                <div>
-                                    <h4>Working Hours</h4>
-                                    <p>Mon - Fri: 9:30 AM - 6:30 PM<br>Sat: 10:00 AM - 2:00 PM</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="map-container fade-in-up" style="animation-delay: 0.2s;">
-                        <!-- Valid embedded map for Navi Mumbai -->
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241316.64332924102!2d72.88260655!3d19.0825223!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sNavi%20Mumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1710237721868!5m2!1sen!2sin"
-                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container footer-content">
-            <div class="footer-brand">
-                <div class="logo">
-                    <span class="logo-icon"><i class="ph ph-briefcase"></i></span>
-                    <span class="logo-text">JAAS Consultancy<span class="accent">.</span></span>
-                </div>
-                <p>Delivering trust and expertise in financial services for over a decade.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/919876543210?text=Hi!%20I%20have%20an%20inquiry%20regarding%20CA%20services." target="_blank"
-        class="whatsapp-float" aria-label="Chat on WhatsApp">
-        <i class="ph-fill ph-whatsapp-logo"></i>
-    </a>
-
-    <!-- Overlay for mobile menu -->
-    <div class="overlay" id="overlay"></div>
-
-    <script src="app.js"></script>
-</body>
-
-</html>
+    fadeElements.forEach(el => {
+        appearOnScroll.observe(el);
+    });
+});
