@@ -1006,3 +1006,23 @@ img, iframe {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--clr-gold-500);
 }
+
+.footer-bottom.minimal {
+    text-align: center;
+    padding: 20px 0;
+    font-size: 13px;
+    color: #888;
+}
+
+.footer-bottom.minimal span {
+    margin: 0 10px;
+}
+
+.footer-bottom.minimal a {
+    color: #aaa;
+    text-decoration: none;
+}
+
+.footer-bottom.minimal a:hover {
+    color: #fff;
+}
