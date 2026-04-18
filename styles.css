@@ -1,15 +1,10 @@
-/* 
-  CA Firm Website
-  Premium, Modern Design System 
-*/
-
 :root {
   /* Color Palette - Premium Navy, Gold, and Crisp Whites */
-  --clr-navy-900: #0f172a;
+  --clr-navy-900: #0a0f1a;
   --clr-navy-800: #1e293b;
   --clr-navy-700: #334155;
-  --clr-gold-500: #d4af37;
-  --clr-gold-600: #aa8c2c;
+  --clr-gold-500: #c5a059;
+  --clr-gold-600: #a38241;
   --clr-gold-light: rgba(212, 175, 55, 0.1);
   --clr-gray-100: #f8fafc;
   --clr-gray-200: #f1f5f9;
@@ -120,6 +115,20 @@ img, iframe {
 .accent-text {
   color: var(--clr-gold-500);
   font-style: italic;
+  position: relative;
+  display: inline-block;
+}
+
+.accent-text::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--clr-gold-500);
+  opacity: 0.3;
+  z-index: -1;
 }
 
 /* Buttons */
@@ -235,11 +244,11 @@ img, iframe {
 }
 
 .nav-link {
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 0.8rem;
+  font-weight: 600;
   color: var(--clr-navy-700);
   position: relative;
-  letter-spacing: 0.5px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
 }
 
@@ -293,8 +302,9 @@ img, iframe {
   height: 100%;
   background: 
     linear-gradient(to right, rgba(15, 23, 42, 0.9) 30%, rgba(15, 23, 42, 0.4)),
-    url('./wall.jpg') center/cover;
+    url('./wall.png') center/cover;
   z-index: 0;
+  animation: slowZoom 20s infinite alternate;
 }
 
 .hero-content {
@@ -324,6 +334,8 @@ img, iframe {
   font-size: clamp(3rem, 5vw, 4.5rem);
   color: var(--clr-white);
   margin-bottom: 1.5rem;
+  line-height: 1.1;
+  letter-spacing: -1px;
 }
 
 .hero-subtitle {
@@ -495,30 +507,31 @@ img, iframe {
 
 .service-card {
   background: var(--clr-white);
-  padding: 2.5rem 2rem;
+  padding: 3rem 2rem;
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.05);
   transition: var(--transition-normal);
-  border-bottom: 3px solid transparent;
+  border: 1px solid rgba(15, 23, 42, 0.05);
 }
 
 .service-card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-10px);
-  border-bottom-color: var(--clr-gold-500);
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.12);
+  border-color: var(--clr-gold-500);
 }
 
 .service-icon {
-  width: 60px;
-  height: 60px;
-  background: var(--clr-gold-light);
+  width: 70px;
+  height: 70px;
+  background: var(--clr-gray-100);
   color: var(--clr-gold-600);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--clr-gray-200);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 2rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   transition: var(--transition-normal);
 }
 
@@ -530,6 +543,8 @@ img, iframe {
 .service-title {
   font-size: 1.25rem;
   margin-bottom: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.2px;
 }
 
 .service-desc {
@@ -893,136 +908,75 @@ img, iframe {
   opacity: 1;
 }
 
-/* --- High-End Refinements --- */
-
-:root {
-  /* Refining the Gold to be less 'yellow' and more 'champagne' */
-  --clr-gold-500: #c5a059; 
-  --clr-gold-600: #a38241;
-  /* Deepening the Navy */
-  --clr-navy-900: #0a0f1a; 
+@keyframes slowZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
 }
 
-/* 1. Logo Mark Styling */
 .logo-mark {
-    width: 32px;
-    height: 32px;
-    background: var(--clr-gold-500);
-    color: var(--clr-white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-serif);
-    font-weight: bold;
-    border-radius: 4px;
-    font-size: 1.2rem;
+  width: 32px;
+  height: 32px;
+  background: var(--clr-gold-500);
+  color: var(--clr-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-weight: bold;
+  border-radius: 4px;
+  font-size: 1.2rem;
 }
 
 .logo-text {
-    letter-spacing: -0.5px;
-    font-weight: 800;
+  letter-spacing: -0.5px;
+  font-weight: 800;
 }
 
-/* 2. Enhanced Hero Section */
-.hero-bg {
-    /* Adding a subtle zoom animation to the background */
-    animation: slowZoom 20s infinite alternate;
-}
-
-@keyframes slowZoom {
-    from { transform: scale(1); }
-    to { transform: scale(1.1); }
-}
-
-.hero-title {
-    line-height: 1.1;
-    letter-spacing: -1px;
-}
-
-.accent-text {
-    position: relative;
-    display: inline-block;
-}
-
-/* Adding a subtle underline to the gold text */
-.accent-text::after {
-    content: '';
-    position: absolute;
-    bottom: 8px;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: var(--clr-gold-500);
-    opacity: 0.3;
-    z-index: -1;
-}
-
-/* 3. Premium Service Cards */
-.service-card {
-    border: 1px solid rgba(15, 23, 42, 0.05); /* Very light border */
-    background: #ffffff;
-    padding: 3rem 2rem;
-    box-shadow: 0 10px 30px -15px rgba(0,0,0,0.05); /* Soft, deep shadow */
-}
-
-.service-card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 20px 40px -20px rgba(0,0,0,0.12);
-    border-color: var(--clr-gold-500);
-}
-
-.service-icon {
-    border-radius: 50%; /* Circular icons look more professional for CA firms */
-    width: 70px;
-    height: 70px;
-    margin-bottom: 2rem;
-    background: var(--clr-gray-100);
-    border: 1px solid var(--clr-gray-200);
-}
-
-.service-title {
-    font-weight: 700;
-    letter-spacing: -0.2px;
-}
-
-/* 4. Refined Navigation */
-.nav-link {
-    font-weight: 600;
-    font-size: 0.8rem;
-    letter-spacing: 1.5px; /* Spaced out caps look premium */
-}
-
-/* 5. Custom Scrollbar for a polished feel */
 ::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
+
 ::-webkit-scrollbar-track {
-    background: var(--clr-gray-100);
+  background: var(--clr-gray-100);
 }
+
 ::-webkit-scrollbar-thumb {
-    background: var(--clr-navy-700);
-    border-radius: 10px;
+  background: var(--clr-navy-700);
+  border-radius: 10px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--clr-gold-500);
+  background: var(--clr-gold-500);
 }
 
 .footer-bottom.minimal {
-    text-align: center;
-    padding: 20px 0;
-    font-size: 13px;
-    color: #888;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 13px;
+  color: #888;
 }
 
 .footer-bottom.minimal span {
-    margin: 0 10px;
+  margin: 0 10px;
 }
 
 .footer-bottom.minimal a {
-    color: #aaa;
-    text-decoration: none;
+  color: #aaa;
+  text-decoration: none;
 }
 
 .footer-bottom.minimal a:hover {
-    color: #fff;
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+  scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  }
 }
