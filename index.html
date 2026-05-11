@@ -17,10 +17,11 @@
 
     <!-- Phosphor Icons for premium icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+    <link rel="icon" href="assets/images/favicon.ico">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 
 <body>
@@ -36,6 +37,7 @@
             <nav class="nav">
                 <ul class="nav-list">
                     <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#news" class="nav-link">News</a></li>
                     <li><a href="#services" class="nav-link">Services</a></li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
@@ -67,10 +69,27 @@
                 <span class="scroll-text">Scroll Down</span>
                 <i class="ph ph-arrow-down"></i>
             </a>
-        </section>  
+        </section>
+
+        <!-- News Section -->
+        <section id="news" class="section bg-light">
+            <div class="container">
+                <div class="news-header-wrapper fade-in-up">
+                    <div class="section-header left-aligned">
+                        <h2 class="section-title">Latest Updates</h2>
+                        <p class="section-description">Stay informed with the latest news and announcements.</p>
+                    </div>
+                    <button id="addNewsBtn" class="btn btn-primary hidden"><i class="ph ph-plus"></i> Add News</button>
+                </div>
+                
+                <div id="newsFeed" class="news-feed">
+                    <div class="loader">Loading updates...</div>
+                </div>
+            </div>
+        </section>
 
         <!-- Services Section -->
-        <section id="services" class="services section bg-light">
+        <section id="services" class="services section">
             <div class="container">
                 <div class="section-header fade-in-up">
                     <h2 class="section-title">Our Services</h2>
@@ -198,9 +217,17 @@
             © 2026 JAAS Consultancy. All rights reserved.
             <span>•</span>
             Designed & Developed by Pixeloid-Solutions.
+            <span>•</span>
+            <a href="#" id="adminLoginBtn" class="admin-link">Admin Login</a>
+            <a href="#" id="adminLogoutBtn" class="admin-link hidden">Logout Admin</a>
         </p>
     </div>
     </footer>
+
+    <!-- Floating Email Button -->
+    <button id="openEmailModal" class="email-float" aria-label="Send Email Query">
+        <i class="ph-fill ph-envelope-simple"></i>
+    </button>
 
     <!-- Floating WhatsApp Button -->
     <a href="https://wa.me/918075047748?text=Hi!%20I%20have%20an%20inquiry%20regarding%20financial%20services%20offered%20by%20your%20firm" target="_blank"
@@ -211,7 +238,87 @@
     <!-- Overlay for mobile menu -->
     <div class="overlay" id="overlay"></div>
 
-    <script src="app.js"></script>
+    <!-- Admin Login Modal -->
+    <div id="loginModal" class="modal-overlay hidden">
+        <div class="modal-content form-container">
+            <div class="form-header">
+                <h3>Admin Login</h3>
+                <button id="closeLoginModal" class="icon-btn"><i class="ph ph-x"></i></button>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="adminEmail" placeholder="Enter admin email">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="adminPassword" placeholder="Enter password">
+            </div>
+            <p id="loginError" class="error-text hidden"></p>
+            <button id="loginSubmitBtn" class="btn btn-primary w-100">Login</button>
+        </div>
+    </div>
+
+    <!-- Admin News Modal -->
+    <div id="newsModal" class="modal-overlay hidden">
+        <div class="modal-content form-container">
+            <div class="form-header">
+                <h3 id="newsModalTitle">Add News</h3>
+                <button id="closeNewsModal" class="icon-btn"><i class="ph ph-x"></i></button>
+            </div>
+            <input type="hidden" id="newsId">
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="newsTitleInput" placeholder="e.g. Tax Deadline Extended">
+            </div>
+            <div class="form-group">
+                <label>Content</label>
+                <textarea id="newsContentInput" rows="5" placeholder="Enter the news details here..."></textarea>
+            </div>
+            <button id="saveNewsBtn" class="btn btn-primary w-100">Save News</button>
+        </div>
+    </div>
+
+    <!-- Email Query Modal -->
+    <div id="queryModal" class="modal-overlay hidden">
+        <div class="modal-content form-container">
+            <div class="form-header">
+                <h3>Submit a Query</h3>
+                <button id="closeQueryModal" class="icon-btn" type="button"><i class="ph ph-x"></i></button>
+            </div>
+            <form id="queryForm">
+                <div class="form-group">
+                    <label>Heading <span class="accent">*</span></label>
+                    <input type="text" id="queryHeading" name="heading" placeholder="Brief subject of your query" required>
+                </div>
+                <div class="form-group">
+                    <label>Query <span class="accent">*</span></label>
+                    <textarea id="queryText" name="query" rows="4" placeholder="Detailed query..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Your Email <span class="accent">*</span></label>
+                    <input type="email" id="queryEmail" name="email" placeholder="So we can reply to you" required>
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="queryName" name="name" placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                    <label>Mobile Number</label>
+                    <input type="tel" id="queryMobile" name="mobile" placeholder="Your Contact Number">
+                </div>
+                <div class="form-group">
+                    <label>Place</label>
+                    <input type="text" id="queryPlace" name="place" placeholder="City/Location">
+                </div>
+                <p id="queryStatus" class="error-text hidden" style="color: var(--clr-success); margin-bottom: 1rem; text-align: center; font-weight: bold;"></p>
+                <button type="submit" id="submitQueryBtn" class="btn btn-primary w-100">Send Query</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/js/app.js"></script>
+    <script type="module" src="assets/js/news.js"></script>
+    <script src="assets/js/email.js"></script>
 </body>
 
 </html>

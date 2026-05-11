@@ -302,7 +302,7 @@ img, iframe {
   height: 100%;
   background: 
     linear-gradient(to right, rgba(15, 23, 42, 0.9) 30%, rgba(15, 23, 42, 0.4)),
-    url('./wall.png') center/cover;
+    url('../images/wall.png') center/cover;
   z-index: 0;
   animation: slowZoom 20s infinite alternate;
 }
@@ -741,6 +741,33 @@ img, iframe {
   font-size: 0.875rem;
 }
 
+/* Email Float */
+.email-float {
+  position: fixed;
+  bottom: 6.5rem;
+  right: 2rem;
+  width: 60px;
+  height: 60px;
+  background-color: var(--clr-navy-900);
+  color: var(--clr-white);
+  border: 2px solid var(--clr-gold-500);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+  transition: var(--transition-normal);
+  cursor: pointer;
+}
+
+.email-float:hover {
+  transform: scale(1.1);
+  background-color: var(--clr-gold-500);
+  color: var(--clr-white);
+}
+
 /* WhatsApp Float */
 .whatsapp-float {
   position: fixed;
@@ -848,13 +875,7 @@ img, iframe {
 }
 
 /* Modals */
-#loginModal {
-  display: none;
-}
-
-#loginModal.active {
-  display: block;
-}
+/* Old login modal styles removed to use .modal-overlay instead */
 
 .modal {
   background: var(--clr-white);
@@ -979,4 +1000,66 @@ img, iframe {
   animation-iteration-count: 1 !important;
   transition-duration: 0.01ms !important;
   }
+}
+
+/* Modals & Admin Feature */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 15, 26, 0.8);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity var(--transition-normal);
+}
+
+.modal-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+  display: flex !important; /* Keep it flex to maintain structure but hidden by opacity/pointer-events */
+}
+
+.modal-content {
+  background: var(--clr-white);
+  width: 100%;
+  max-width: 500px;
+  margin: 1rem;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  transform: translateY(0);
+  transition: transform var(--transition-normal);
+}
+
+.modal-overlay.hidden .modal-content {
+  transform: translateY(-20px);
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.error-text {
+  color: var(--clr-danger);
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.admin-link {
+  color: var(--clr-gray-500);
+  font-size: 0.75rem;
+  text-decoration: underline;
+  transition: color var(--transition-fast);
+  cursor: pointer;
+  margin-left: 0.5rem;
+}
+
+.admin-link:hover {
+  color: var(--clr-white);
 }
